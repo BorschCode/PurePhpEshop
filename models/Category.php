@@ -76,7 +76,7 @@ final class Category
         $sql = 'DELETE FROM category WHERE id = :id';
 
         $result = $db->prepare($sql);
-        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindValue(':id', $id, PDO::PARAM_INT);
         return $result->execute();
     }
 
@@ -101,10 +101,10 @@ final class Category
             WHERE id = :id";
 
         $result = $db->prepare($sql);
-        $result->bindParam(':id', $id, PDO::PARAM_INT);
-        $result->bindParam(':name', $name, PDO::PARAM_STR);
-        $result->bindParam(':sort_order', $sortOrder, PDO::PARAM_INT);
-        $result->bindParam(':status', $status, PDO::PARAM_INT);
+        $result->bindValue(':id', $id, PDO::PARAM_INT);
+        $result->bindValue(':name', $name, PDO::PARAM_STR);
+        $result->bindValue(':sort_order', $sortOrder, PDO::PARAM_INT);
+        $result->bindValue(':status', $status, PDO::PARAM_INT);
         return $result->execute();
     }
 
@@ -121,7 +121,7 @@ final class Category
         $sql = 'SELECT * FROM category WHERE id = :id';
 
         $result = $db->prepare($sql);
-        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindValue(':id', $id, PDO::PARAM_INT);
         $result->setFetchMode(PDO::FETCH_ASSOC);
         $result->execute();
 
@@ -159,9 +159,9 @@ final class Category
             . 'VALUES (:name, :sort_order, :status)';
 
         $result = $db->prepare($sql);
-        $result->bindParam(':name', $name, PDO::PARAM_STR);
-        $result->bindParam(':sort_order', $sortOrder, PDO::PARAM_INT);
-        $result->bindParam(':status', $status, PDO::PARAM_INT);
+        $result->bindValue(':name', $name, PDO::PARAM_STR);
+        $result->bindValue(':sort_order', $sortOrder, PDO::PARAM_INT);
+        $result->bindValue(':status', $status, PDO::PARAM_INT);
         return $result->execute();
     }
 
@@ -186,11 +186,11 @@ final class Category
         $products = json_encode($categories);
 
         $result = $db->prepare($sql);
-        $result->bindParam(':categories', $products, PDO::PARAM_STR);
+        $result->bindValue(':categories', $products, PDO::PARAM_STR);
 
         // NOTE: The binding for :id is missing here, which will cause an error.
         // The original code has logic flaws here, but is retained for translation purposes.
-        // Example fix (requires $id to be passed): $result->bindParam(':id', $productId, PDO::PARAM_INT);
+        // Example fix (requires $id to be passed): $result->bindValue(':id', $productId, PDO::PARAM_INT);
 
         // Attempt execution (will likely fail due to SQL syntax and missing bindParam(':id'))
         return $result->execute();

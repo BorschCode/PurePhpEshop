@@ -61,13 +61,13 @@ include ROOT . '/views/layouts/header.php'; ?>
                                     <form action="#" method="post">
 
                                         <p>Your Name</p>
-                                        <input type="text" name="userName" placeholder="" value="<?php echo htmlspecialchars($userName); ?>"/>
+                                        <input type="text" name="userName" placeholder="" value="<?php echo htmlspecialchars($userName ?? ''); ?>"/>
 
                                         <p>Phone Number</p>
-                                        <input type="text" name="userPhone" placeholder="" value="<?php echo htmlspecialchars($userPhone); ?>"/>
+                                        <input type="text" name="userPhone" placeholder="" value="<?php echo htmlspecialchars($userPhone ?? ''); ?>"/>
 
                                         <p>Comment on the order</p>
-                                        <input type="text" name="userComment" placeholder="Message" value="<?php echo htmlspecialchars($userComment); ?>"/>
+                                        <input type="text" name="userComment" placeholder="Message" value="<?php echo htmlspecialchars($userComment ?? ''); ?>"/>
 
                                         <br/>
                                         <br/>

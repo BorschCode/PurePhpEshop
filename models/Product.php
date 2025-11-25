@@ -33,7 +33,7 @@ final class Product
             . 'LIMIT :count';
 
         $result = $db->prepare($sql);
-        $result->bindParam(':count', $count, PDO::PARAM_INT);
+        $result->bindValue(':count', $count, PDO::PARAM_INT);
         $result->setFetchMode(PDO::FETCH_ASSOC);
         $result->execute();
 
@@ -71,9 +71,9 @@ final class Product
             . 'ORDER BY id ASC LIMIT :limit OFFSET :offset';
 
         $result = $db->prepare($sql);
-        $result->bindParam(':category_id', $categoryId, PDO::PARAM_INT);
-        $result->bindParam(':limit', $limit, PDO::PARAM_INT);
-        $result->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $result->bindValue(':category_id', $categoryId, PDO::PARAM_INT);
+        $result->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $result->bindValue(':offset', $offset, PDO::PARAM_INT);
         $result->execute();
 
         $products = [];
@@ -104,7 +104,7 @@ final class Product
         $sql = 'SELECT * FROM products WHERE id = :id';
 
         $result = $db->prepare($sql);
-        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindValue(':id', $id, PDO::PARAM_INT);
         $result->setFetchMode(PDO::FETCH_ASSOC);
         $result->execute();
 
@@ -124,7 +124,7 @@ final class Product
         $sql = 'SELECT count(id) AS count FROM products WHERE status="1" AND category_id = :category_id';
 
         $result = $db->prepare($sql);
-        $result->bindParam(':category_id', $categoryId, PDO::PARAM_INT);
+        $result->bindValue(':category_id', $categoryId, PDO::PARAM_INT);
         $result->execute();
 
         $row = $result->fetch();
@@ -230,7 +230,7 @@ final class Product
         $sql = 'DELETE FROM products WHERE id = :id';
 
         $result = $db->prepare($sql);
-        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindValue(':id', $id, PDO::PARAM_INT);
         return $result->execute();
     }
 
@@ -262,19 +262,19 @@ final class Product
             WHERE id = :id";
 
         $result = $db->prepare($sql);
-        $result->bindParam(':id', $id, PDO::PARAM_INT);
-        $result->bindParam(':tittle', $options['tittle'], PDO::PARAM_STR);
-        $result->bindParam(':code', $options['code'], PDO::PARAM_STR);
-        $result->bindParam(':price', $options['price'], PDO::PARAM_STR);
-        $result->bindParam(':price_new', $options['price_new'], PDO::PARAM_STR);
-        $result->bindParam(':category_id', $options['category_id'], PDO::PARAM_INT);
-        $result->bindParam(':brand', $options['brand'], PDO::PARAM_STR);
-        $result->bindParam(':availability', $options['availability'], PDO::PARAM_INT);
-        $result->bindParam(':description', $options['description'], PDO::PARAM_STR);
-        $result->bindParam(':is_new', $options['is_new'], PDO::PARAM_INT);
-        $result->bindParam(':is_recommended', $options['is_recommended'], PDO::PARAM_INT);
-        $result->bindParam(':status', $options['status'], PDO::PARAM_INT);
-        $result->bindParam(':categories', $options['categories'], PDO::PARAM_STR);
+        $result->bindValue(':id', $id, PDO::PARAM_INT);
+        $result->bindValue(':tittle', $options['tittle'], PDO::PARAM_STR);
+        $result->bindValue(':code', $options['code'], PDO::PARAM_STR);
+        $result->bindValue(':price', $options['price'], PDO::PARAM_STR);
+        $result->bindValue(':price_new', $options['price_new'], PDO::PARAM_STR);
+        $result->bindValue(':category_id', $options['category_id'], PDO::PARAM_INT);
+        $result->bindValue(':brand', $options['brand'], PDO::PARAM_STR);
+        $result->bindValue(':availability', $options['availability'], PDO::PARAM_INT);
+        $result->bindValue(':description', $options['description'], PDO::PARAM_STR);
+        $result->bindValue(':is_new', $options['is_new'], PDO::PARAM_INT);
+        $result->bindValue(':is_recommended', $options['is_recommended'], PDO::PARAM_INT);
+        $result->bindValue(':status', $options['status'], PDO::PARAM_INT);
+        $result->bindValue(':categories', $options['categories'], PDO::PARAM_STR);
         return $result->execute();
     }
 
@@ -289,23 +289,27 @@ final class Product
         $db = \App\Core\Db::getConnection();
 
         $sql = 'INSERT INTO products '
-            . '(tittle, code, price, category_id, brand, availability,'
-            . 'description, is_new, is_recommended, status)'
+            . '(tittle, code, price, price_new, category_id, brand, availability,'
+            . 'description, is_new, is_recommended, status, breadcrumbs, metatags, categories)'
             . 'VALUES '
-            . '(:tittle, :code, :price, :category_id, :brand, :availability,'
-            . ':description, :is_new, :is_recommended, :status)';
+            . '(:tittle, :code, :price, :price_new, :category_id, :brand, :availability,'
+            . ':description, :is_new, :is_recommended, :status, :breadcrumbs, :metatags, :categories)';
 
         $result = $db->prepare($sql);
-        $result->bindParam(':tittle', $options['tittle'], PDO::PARAM_STR);
-        $result->bindParam(':code', $options['code'], PDO::PARAM_STR);
-        $result->bindParam(':price', $options['price'], PDO::PARAM_STR);
-        $result->bindParam(':category_id', $options['category_id'], PDO::PARAM_INT);
-        $result->bindParam(':brand', $options['brand'], PDO::PARAM_STR);
-        $result->bindParam(':availability', $options['availability'], PDO::PARAM_INT);
-        $result->bindParam(':description', $options['description'], PDO::PARAM_STR);
-        $result->bindParam(':is_new', $options['is_new'], PDO::PARAM_INT);
-        $result->bindParam(':is_recommended', $options['is_recommended'], PDO::PARAM_INT);
-        $result->bindParam(':status', $options['status'], PDO::PARAM_INT);
+        $result->bindValue(':tittle', $options['tittle'], PDO::PARAM_STR);
+        $result->bindValue(':code', $options['code'], PDO::PARAM_INT);
+        $result->bindValue(':price', $options['price'], PDO::PARAM_STR);
+        $result->bindValue(':price_new', $options['price_new'] ?? 0, PDO::PARAM_STR);
+        $result->bindValue(':category_id', $options['category_id'], PDO::PARAM_INT);
+        $result->bindValue(':brand', $options['brand'], PDO::PARAM_STR);
+        $result->bindValue(':availability', $options['availability'], PDO::PARAM_INT);
+        $result->bindValue(':description', $options['description'], PDO::PARAM_STR);
+        $result->bindValue(':is_new', $options['is_new'], PDO::PARAM_INT);
+        $result->bindValue(':is_recommended', $options['is_recommended'], PDO::PARAM_INT);
+        $result->bindValue(':status', $options['status'], PDO::PARAM_INT);
+        $result->bindValue(':breadcrumbs', $options['breadcrumbs'] ?? '', PDO::PARAM_STR);
+        $result->bindValue(':metatags', $options['metatags'] ?? '', PDO::PARAM_STR);
+        $result->bindValue(':categories', $options['categories'] ?? '[]', PDO::PARAM_STR);
 
         if ($result->execute()) {
             return (int) $db->lastInsertId();

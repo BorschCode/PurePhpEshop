@@ -1,54 +1,60 @@
-<?php include ROOT . '/views/layouts/header_admin.php'; ?>
+<?php
+/**
+ * Admin Order Update Form Template
+ *
+ * Displays the form for editing an existing order in the admin panel.
+ * Includes customer information, order date, and status fields.
+ *
+ * @var int $id Order ID being edited
+ * @var array $order Order data array with current values
+ * @var string $pageTitle Page title for SEO
+ * @var string $pageDescription Page description for SEO
+ */
+include ROOT . '/views/layouts/header_admin.php'; ?>
 
 <section>
     <div class="container">
         <div class="row">
-
-            <br/>
-
             <div class="breadcrumbs">
                 <ol class="breadcrumb">
-                    <li><a href="/admin">Админпанель</a></li>
-                    <li><a href="/admin/order">Управление заказами</a></li>
-                    <li class="active">Редактировать заказ</li>
+                    <li><a href="/admin">Admin Panel</a></li>
+                    <li><a href="/admin/order">Order Management</a></li>
+                    <li class="active">Edit Order</li>
                 </ol>
             </div>
 
+            <h4>Edit Order #<?php echo htmlspecialchars($id); ?></h4>
 
-            <h4>Редактировать заказ #<?php echo $id; ?></h4>
-
-            <br/>
-
-            <div class="col-lg-4">
+            <div class="col-lg-6">
                 <div class="login-form">
                     <form action="#" method="post">
+                        <p>Customer Name</p>
+                        <input type="text" name="userName" placeholder="Enter customer name" value="<?php echo htmlspecialchars($order['user_name']); ?>" required>
 
-                        <p>Имя клиента</p>
-                        <input type="text" name="userName" placeholder="" value="<?php echo $order['user_name']; ?>">
+                        <p>Customer Phone</p>
+                        <input type="tel" name="userPhone" placeholder="Enter phone number" value="<?php echo htmlspecialchars($order['user_phone']); ?>" required>
 
-                        <p>Телефон клиента</p>
-                        <input type="text" name="userPhone" placeholder="" value="<?php echo $order['user_phone']; ?>">
+                        <p>Customer Comment</p>
+                        <textarea name="userComment" rows="3" placeholder="Customer comments"><?php echo htmlspecialchars($order['user_comment']); ?></textarea>
 
-                        <p>Комментарий клиента</p>
-                        <input type="text" name="userComment" placeholder="" value="<?php echo $order['user_comment']; ?>">
+                        <p>Order Date</p>
+                        <input type="datetime-local" name="date" value="<?php echo date('Y-m-d\TH:i', strtotime($order['date'])); ?>" required>
 
-                        <p>Дата оформления заказа</p>
-                        <input type="text" name="date" placeholder="" value="<?php echo $order['date']; ?>">
-
-                        <p>Статус</p>
-                        <select name="status">
-                            <option value="1" <?php if ($order['status'] == 1) echo ' selected="selected"'; ?>>Новый заказ</option>
-                            <option value="2" <?php if ($order['status'] == 2) echo ' selected="selected"'; ?>>В обработке</option>
-                            <option value="3" <?php if ($order['status'] == 3) echo ' selected="selected"'; ?>>Доставляется</option>
-                            <option value="4" <?php if ($order['status'] == 4) echo ' selected="selected"'; ?>>Закрыт</option>
+                        <p>Status</p>
+                        <select name="status" class="form-control" required>
+                            <option value="1" <?php if ($order['status'] == 1) echo ' selected="selected"'; ?>>New Order</option>
+                            <option value="2" <?php if ($order['status'] == 2) echo ' selected="selected"'; ?>>Processing</option>
+                            <option value="3" <?php if ($order['status'] == 3) echo ' selected="selected"'; ?>>Delivering</option>
+                            <option value="4" <?php if ($order['status'] == 4) echo ' selected="selected"'; ?>>Closed</option>
                         </select>
-                        <br>
-                        <br>
-                        <input type="submit" name="submit" class="btn btn-default" value="Сохранить">
+                        
+                        <br><br>
+                        
+                        <input type="submit" name="submit" class="btn btn-primary" value="Update Order">
+                        <a href="/admin/order" class="btn btn-default">Cancel</a>
                     </form>
                 </div>
             </div>
-
         </div>
     </div>
 </section>

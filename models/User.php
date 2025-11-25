@@ -29,9 +29,9 @@ final class User
             . 'VALUES (:name, :email, :password)';
 
         $result = $db->prepare($sql);
-        $result->bindParam(':name', $name, PDO::PARAM_STR);
-        $result->bindParam(':email', $email, PDO::PARAM_STR);
-        $result->bindParam(':password', $password, PDO::PARAM_STR);
+        $result->bindValue(':name', $name, PDO::PARAM_STR);
+        $result->bindValue(':email', $email, PDO::PARAM_STR);
+        $result->bindValue(':password', $password, PDO::PARAM_STR);
 
         return $result->execute();
     }
@@ -53,9 +53,9 @@ final class User
             WHERE id = :id";
 
         $result = $db->prepare($sql);
-        $result->bindParam(':id', $id, PDO::PARAM_INT);
-        $result->bindParam(':name', $name, PDO::PARAM_STR);
-        $result->bindParam(':password', $password, PDO::PARAM_STR);
+        $result->bindValue(':id', $id, PDO::PARAM_INT);
+        $result->bindValue(':name', $name, PDO::PARAM_STR);
+        $result->bindValue(':password', $password, PDO::PARAM_STR);
         return $result->execute();
     }
 
@@ -73,8 +73,8 @@ final class User
         $sql = 'SELECT * FROM user WHERE email = :email AND password = :password';
 
         $result = $db->prepare($sql);
-        $result->bindParam(':email', $email, PDO::PARAM_STR);
-        $result->bindParam(':password', $password, PDO::PARAM_STR);
+        $result->bindValue(':email', $email, PDO::PARAM_STR);
+        $result->bindValue(':password', $password, PDO::PARAM_STR);
         $result->execute();
 
         $user = $result->fetch();
@@ -178,7 +178,7 @@ final class User
         $sql = 'SELECT COUNT(*) FROM user WHERE email = :email';
 
         $result = $db->prepare($sql);
-        $result->bindParam(':email', $email, PDO::PARAM_STR);
+        $result->bindValue(':email', $email, PDO::PARAM_STR);
         $result->execute();
 
         return (bool) $result->fetchColumn();
@@ -197,7 +197,7 @@ final class User
             $sql = 'SELECT * FROM user WHERE id = :id';
 
             $result = $db->prepare($sql);
-            $result->bindParam(':id', $id, PDO::PARAM_INT);
+            $result->bindValue(':id', $id, PDO::PARAM_INT);
             $result->setFetchMode(PDO::FETCH_ASSOC);
             $result->execute();
 

@@ -1,5 +1,16 @@
 <?php
-/** * Created by PhpStorm. * Date: 07.12.2017 * Time: 11:13 */
+/**
+ * Homepage View Template
+ *
+ * Displays the main homepage with category sidebar navigation and latest products grid.
+ * Features product cards with images, pricing (including sale prices), and add-to-cart functionality.
+ * Includes hover effects for product images and "New" badges for recently added items.
+ *
+ * @var array $categories List of product categories for sidebar navigation
+ * @var array $latestProducts Array of latest products to display on homepage
+ * @var string $pageTitle Page title for SEO
+ * @var string $pageDescription Page description for SEO
+ */
 include ROOT.'/views/layouts/header.php'?>
 
     <section>
@@ -35,11 +46,9 @@ include ROOT.'/views/layouts/header.php'?>
                                     <div class="single-products">
                                         <div class="productinfo text-center">
                                             <div class="imageProduct">
-                                                <img src="<?php echo \App\Models\Product::getLowImage($product['id']); ?>" />
-                                                <img src="<?php echo \App\Models\Product::getMediumImage($product['id']); ?>"/>
+                                                <img src="<?php echo \App\Models\Product::getLowImage($product['id']); ?>" alt="<?php echo htmlspecialchars($product['tittle']); ?>" />
+                                                <img src="<?php echo \App\Models\Product::getMediumImage($product['id']); ?>" alt="<?php echo htmlspecialchars($product['tittle']); ?>"/>
                                             </div>
-
-                                            <!--<img src="/assets/img/home/product1.jpg" alt="" />-->
                                             <?php if ($product['price_new']): ?>
                                                 <h4><s>$<?php echo $product['price'];?></s></h4>
                                                 <h2>$<?php echo $product['price_new'];?></h2>
@@ -48,13 +57,13 @@ include ROOT.'/views/layouts/header.php'?>
                                             <?php endif; ?>
                                             <p>
                                                 <a href="/alias/p<?php echo $product['id'];?>">
-                                                    <?php echo $product['tittle'];?>
+                                                    <?php echo htmlspecialchars($product['tittle']);?>
                                                 </a>
                                             </p>
                                             <a href="/cart/add/<?php echo $product['id']; ?>" class="btn btn-default add-to-cart" data-id="<?php echo $product['id']; ?>"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
                                         </div>
                                         <?php if ($product['is_new']): ?>
-                                            <img src="/assets/img/home/new.png" class="new" alt="" />
+                                            <img src="/assets/img/home/new.png" class="new" alt="New Product" />
                                         <?php endif; ?>
                                     </div>
                                 </div>

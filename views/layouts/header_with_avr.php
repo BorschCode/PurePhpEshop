@@ -1,9 +1,16 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: George
- * Date: 10.12.2017
- * Time: 22:54
+ * Admin Header Template with Breadcrumbs
+ *
+ * Alternative header template specifically designed for admin pages.
+ * Includes SEO meta tags, canonical URLs, robots directives, and
+ * structured breadcrumb navigation with microdata markup.
+ *
+ * @var string $pageTitle Page title for the <title> tag
+ * @var string $pageDescription Meta description content
+ * @var string|null $pageCanonical Canonical URL for SEO (optional)
+ * @var string|null $pageRobots Robots meta tag content (optional)
+ * @var array $crumbs Breadcrumb items array with 'url' and 'text' keys
  */?>
 <html lang="en">
 <head>
@@ -55,27 +62,8 @@ if($pageRobots)
 
     <div class="breadcrumbs">
         <ol class="breadcrumb">
-            <li><a href="/admin">Админпанель</a></li>
-            <li><a href="/admin/order">Управление заказами</a></li>
-            <li class="active">Редактировать заказ</li>
+            <li><a href="/admin">Admin Panel</a></li>
+            <li><a href="/admin/order">Order Management</a></li>
+            <li class="active">Edit Order</li>
         </ol>
-    </div>
-
-
-    <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-        <a href="$item['url']"> itemprop="url">
-            <span itemprop="title">$item['text'] </span>
-        </a>
-    </div>
-
-    <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-        <a href="адрес страницы 2го уровня (например, рубрика)" itemprop="url">
-            <span itemprop="title">название страницы</span>
-        </a>
-    </div>
-
-    <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-        <a href="адрес страницы 3го уровня (например, подрубрика)" itemprop="url">
-            <span itemprop="title">название страницы</span>
-        </a>
     </div>

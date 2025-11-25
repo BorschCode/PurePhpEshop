@@ -2,6 +2,16 @@
 
 A modern, framework-free e-commerce catalog built with pure PHP 8.4, featuring strict typing, PSR-4 autoloading, and Docker containerization.
 
+
+![Main](./readme/index.png)
+
+![Main](./readme/Category%20Management.png)
+
+![Main](./readme/breadcrumbs.png)
+
+![Main](./readme/contact.png)
+
+
 ## 🚀 Features
 
 ### Core Requirements

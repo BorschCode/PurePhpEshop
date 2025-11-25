@@ -58,20 +58,25 @@ final class AdminProductController extends AdminBase
         // Form processing
         if (isset($_POST['submit'])) {
             // Retrieve data from the form
-            $options['title'] = $_POST['tittle'] ?? ''; // Corrected typo in variable name for consistency
-            $options['code'] = $_POST['code'] ?? '';
-            $options['price'] = $_POST['price'] ?? 0;
-            $options['category_id'] = $_POST['category_id'] ?? 0;
+            $options['tittle'] = $_POST['tittle'] ?? '';
+            $options['code'] = filter_var($_POST['code'] ?? '', FILTER_VALIDATE_INT) ?: 0;
+            $options['price'] = filter_var($_POST['price'] ?? 0, FILTER_VALIDATE_FLOAT) ?: 0;
+            $options['price_new'] = filter_var($_POST['price_new'] ?? 0, FILTER_VALIDATE_FLOAT) ?: 0;
+            $options['category_id'] = filter_var($_POST['category_id'] ?? 0, FILTER_VALIDATE_INT) ?: 0;
             $options['brand'] = $_POST['brand'] ?? '';
-            $options['availability'] = $_POST['availability'] ?? 1;
+            $options['availability'] = filter_var($_POST['availability'] ?? 1, FILTER_VALIDATE_INT) ?: 1;
             $options['description'] = $_POST['description'] ?? '';
-            $options['is_new'] = $_POST['is_new'] ?? 0;
-            $options['is_recommended'] = $_POST['is_recommended'] ?? 0;
-            $options['status'] = $_POST['status'] ?? 1;
+            $options['is_new'] = filter_var($_POST['is_new'] ?? 0, FILTER_VALIDATE_INT) ?: 0;
+            $options['is_recommended'] = filter_var($_POST['is_recommended'] ?? 0, FILTER_VALIDATE_INT) ?: 0;
+            $options['status'] = filter_var($_POST['status'] ?? 1, FILTER_VALIDATE_INT) ?: 1;
 
             // Validate values as necessary
-            if (empty($options['title'])) {
+            if (empty($options['tittle'])) {
                 $errors[] = 'Please fill in the product title.';
+            }
+
+            if ($options['code'] === 0 && !empty($_POST['code'])) {
+                $errors[] = 'Product code must be a valid number.';
             }
 
             if (empty($errors)) {
@@ -150,19 +155,19 @@ final class AdminProductController extends AdminBase
         // Form processing
         if (isset($_POST['submit'])) {
             // Retrieve data from the edit form. Validate values as necessary
-            $options['title'] = $_POST['tittle'] ?? $product['title'];
-            $options['code'] = $_POST['code'] ?? $product['code'];
-            $options['price'] = $_POST['price'] ?? $product['price'];
-            $options['price_new'] = $_POST['price_new'] ?? $product['price_new'];
-            $options['category_id'] = $_POST['category_id'] ?? $product['category_id'];
+            $options['tittle'] = $_POST['tittle'] ?? $product['tittle'];
+            $options['code'] = filter_var($_POST['code'] ?? $product['code'], FILTER_VALIDATE_INT) ?: (int)$product['code'];
+            $options['price'] = filter_var($_POST['price'] ?? $product['price'], FILTER_VALIDATE_FLOAT) ?: (float)$product['price'];
+            $options['price_new'] = filter_var($_POST['price_new'] ?? $product['price_new'], FILTER_VALIDATE_FLOAT) ?: (float)$product['price_new'];
+            $options['category_id'] = filter_var($_POST['category_id'] ?? $product['category_id'], FILTER_VALIDATE_INT) ?: (int)$product['category_id'];
             // Store multiple categories as a JSON string
             $options['categories'] = json_encode($_POST['categories'] ?? []);
             $options['brand'] = $_POST['brand'] ?? $product['brand'];
-            $options['availability'] = $_POST['availability'] ?? $product['availability'];
+            $options['availability'] = filter_var($_POST['availability'] ?? $product['availability'], FILTER_VALIDATE_INT) ?: (int)$product['availability'];
             $options['description'] = $_POST['description'] ?? $product['description'];
-            $options['is_new'] = $_POST['is_new'] ?? $product['is_new'];
-            $options['is_recommended'] = $_POST['is_recommended'] ?? $product['is_recommended'];
-            $options['status'] = $_POST['status'] ?? $product['status'];
+            $options['is_new'] = filter_var($_POST['is_new'] ?? $product['is_new'], FILTER_VALIDATE_INT) ?: (int)$product['is_new'];
+            $options['is_recommended'] = filter_var($_POST['is_recommended'] ?? $product['is_recommended'], FILTER_VALIDATE_INT) ?: (int)$product['is_recommended'];
+            $options['status'] = filter_var($_POST['status'] ?? $product['status'], FILTER_VALIDATE_INT) ?: (int)$product['status'];
 
             // Save changes
             if (Product::updateProductById($id, $options)) {

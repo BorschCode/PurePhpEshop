@@ -22,7 +22,7 @@ include ROOT . '/views/layouts/header.php'; ?>
                 <?php if ($result): ?>
                     <p>Message sent successfully! We will reply to your specified email address.</p>
                 <?php else: ?>
-                    <?php if (isset($errors) && is_array($errors)): ?>
+                    <?php if (isset($errors) && is_array($errors) && !empty($errors)): ?>
                         <ul class="alert alert-danger">
                             <?php foreach ($errors as $error): ?>
                                 <li><?php echo htmlspecialchars($error); ?></li>
@@ -35,10 +35,10 @@ include ROOT . '/views/layouts/header.php'; ?>
                         <h5>Have a question? Write to us</h5>
                         <br/>
                         <form action="#" method="post">
-                            <p>Your Email</p>
-                            <input type="email" name="userEmail" placeholder="E-mail" value="<?php echo htmlspecialchars($userEmail ?? ''); ?>" required/>
-                            <p>Message</p>
-                            <textarea name="userText" placeholder="Your message" rows="5" required><?php echo htmlspecialchars($userText ?? ''); ?></textarea>
+                            <label for="userEmail">Your Email</label>
+                            <input type="email" id="userEmail" name="userEmail" placeholder="E-mail" value="<?php echo htmlspecialchars($userEmail ?? ''); ?>" required/>
+                            <label for="userText">Message</label>
+                            <textarea id="userText" name="userText" placeholder="Your message" rows="5" required><?php echo htmlspecialchars($userText ?? ''); ?></textarea>
                             <br/>
                             <input type="submit" name="submit" class="btn btn-default" value="Send Message" />
                         </form>

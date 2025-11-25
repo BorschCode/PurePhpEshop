@@ -32,11 +32,11 @@ final class Order
         $productsJson = json_encode($products);
 
         $result = $db->prepare($sql);
-        $result->bindParam(':user_name', $userName, PDO::PARAM_STR);
-        $result->bindParam(':user_phone', $userPhone, PDO::PARAM_STR);
-        $result->bindParam(':user_comment', $userComment, PDO::PARAM_STR);
+        $result->bindValue(':user_name', $userName, PDO::PARAM_STR);
+        $result->bindValue(':user_phone', $userPhone, PDO::PARAM_STR);
+        $result->bindValue(':user_comment', $userComment, PDO::PARAM_STR);
         $result->bindValue(':user_id', $userId !== false ? $userId : 0, PDO::PARAM_INT);
-        $result->bindParam(':products', $productsJson, PDO::PARAM_STR);
+        $result->bindValue(':products', $productsJson, PDO::PARAM_STR);
 
         return $result->execute();
     }
@@ -93,7 +93,7 @@ final class Order
         $sql = 'SELECT * FROM product_order WHERE id = :id';
 
         $result = $db->prepare($sql);
-        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindValue(':id', $id, PDO::PARAM_INT);
 
         // Execute the query
         $result->execute();
@@ -115,7 +115,7 @@ final class Order
 
         // Fetching and returning results. A prepared statement is used.
         $result = $db->prepare($sql);
-        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindValue(':id', $id, PDO::PARAM_INT);
         return $result->execute();
     }
 
@@ -145,12 +145,12 @@ final class Order
 
         // Fetching and returning results. A prepared statement is used.
         $result = $db->prepare($sql);
-        $result->bindParam(':id', $id, PDO::PARAM_INT);
-        $result->bindParam(':user_name', $userName, PDO::PARAM_STR);
-        $result->bindParam(':user_phone', $userPhone, PDO::PARAM_STR);
-        $result->bindParam(':user_comment', $userComment, PDO::PARAM_STR);
-        $result->bindParam(':date', $date, PDO::PARAM_STR);
-        $result->bindParam(':status', $status, PDO::PARAM_INT);
+        $result->bindValue(':id', $id, PDO::PARAM_INT);
+        $result->bindValue(':user_name', $userName, PDO::PARAM_STR);
+        $result->bindValue(':user_phone', $userPhone, PDO::PARAM_STR);
+        $result->bindValue(':user_comment', $userComment, PDO::PARAM_STR);
+        $result->bindValue(':date', $date, PDO::PARAM_STR);
+        $result->bindValue(':status', $status, PDO::PARAM_INT);
         return $result->execute();
     }
 }

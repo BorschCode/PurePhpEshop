@@ -1,10 +1,8 @@
-<!--/** * Created by PhpStorm. * Date: 07.12.2017 */-->
-
 <footer id="footer"><!--Footer-->
     <div class="footer-bottom">
         <div class="container">
             <div class="row">
-                <p class="pull-left">Copyright © 2017</p>
+                <p class="pull-left">Copyright © <?php echo date('Y'); ?></p>
                 <p class="pull-right">Test task for https://wezom.com.ua/</p>
             </div>
         </div>

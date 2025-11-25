@@ -1,0 +1,37 @@
+services:
+  web:
+    build: .
+    ports:
+      - "${WEB_PORT:-8080}:80"
+    volumes:
+      - .:/var/www/html
+      - ./upload:/var/www/html/upload
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=${DB_HOST:-db}
+      - DB_NAME=${DB_NAME:-catalog}
+      - DB_USER=${DB_USER:-webuser}
+      - DB_PASSWORD=${DB_PASSWORD:-123}
+    command: >
+      bash -c "chown -R www-data:www-data /var/www/html &&
+               chmod -R 755 /var/www/html &&
+               chmod -R 777 /var/www/html/upload &&
+               if [ -f composer.json ]; then composer install --no-dev --optimize-autoloader; fi &&
+               apache2-foreground"
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
+      MYSQL_DATABASE: ${DB_NAME:-catalog}
+      MYSQL_USER: ${DB_USER:-webuser}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-123}
+    volumes:
+      - ./catalog.sql:/docker-entrypoint-initdb.d/catalog.sql
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "${DB_PORT:-3306}:3306"
+
+volumes:
+  mysql_data:

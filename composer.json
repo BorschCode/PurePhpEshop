@@ -1,38 +1,20 @@
 {
-    "name": "purephp/market",
-    "description": "Pure PHP E-Commerce Catalog - A framework-free product catalog with MVC architecture",
+    "name": "purephpmarket/shop",
+    "description": "Pure PHP Market - E-commerce application built with PHP 8.4",
     "type": "project",
     "license": "MIT",
     "require": {
         "php": ">=8.4"
     },
-    "require-dev": {
-        "phpunit/phpunit": "^11.0"
-    },
     "autoload": {
         "psr-4": {
-            "App\\Models\\": "models/",
             "App\\Controllers\\": "controllers/",
-            "App\\Functions\\": "function/"
-        },
-        "files": [
-            "function/autoload.php"
-        ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/"
+            "App\\Models\\": "models/",
+            "App\\Core\\": "function/"
         }
     },
     "config": {
         "optimize-autoloader": true,
         "sort-packages": true
-    },
-    "scripts": {
-        "test": "phpunit",
-        "serve": "php -S localhost:8000 -t .",
-        "dump-autoload": "composer dump-autoload --optimize"
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+    }
 }

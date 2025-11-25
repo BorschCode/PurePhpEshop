@@ -1,52 +1,70 @@
-<?php include ROOT . '/views/layouts/header_admin.php'; ?>
+<?php
+/**
+ * Admin Order List Template
+ *
+ * Displays a table of all orders with options to view, edit, and delete.
+ * Shows order ID, customer name, phone, date, status, and action buttons.
+ *
+ * @var array $ordersList List of all orders with their data
+ * @var string $pageTitle Page title for SEO
+ * @var string $pageDescription Page description for SEO
+ */
+include ROOT . '/views/layouts/header_admin.php'; ?>
 
 <section>
     <div class="container">
         <div class="row">
-
-            <br/>
-                        
             <div class="breadcrumbs">
                 <ol class="breadcrumb">
-                    <li><a href="/admin">Админпанель</a></li>
-                    <li class="active">Управление заказами</li>
+                    <li><a href="/admin">Admin Panel</a></li>
+                    <li class="active">Order Management</li>
                 </ol>
             </div>
 
-            <h4>Список заказов</h4>
+            <h4>Order List</h4>
 
-            <br/>
-
-            
-            <table class="table-bordered table-striped table">
-                <tr>
-                    <th>ID заказа</th>
-                    <th>Имя покупателя</th>
-                    <th>Телефон покупателя</th>
-                    <th>Дата оформления</th>
-                    <th>Статус</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-                <?php foreach ($ordersList as $order): ?>
+            <table class="table table-bordered table-striped">
+                <thead>
                     <tr>
-                        <td>
-                            <a href="/admin/order/view/<?php echo $order['id']; ?>">
-                                <?php echo $order['id']; ?>
-                            </a>
-                        </td>
-                        <td><?php echo $order['user_name']; ?></td>
-                        <td><?php echo $order['user_phone']; ?></td>
-                        <td><?php echo $order['date']; ?></td>
-                        <td><?php echo Order::getStatusText($order['status']); ?></td>    
-                        <td><a href="/admin/order/view/<?php echo $order['id']; ?>" title="Смотреть"><i class="fa fa-eye"></i></a></td>
-                        <td><a href="/admin/order/update/<?php echo $order['id']; ?>" title="Редактировать"><i class="fa fa-pencil-square-o"></i></a></td>
-                        <td><a href="/admin/order/delete/<?php echo $order['id']; ?>" title="Delete"><i class="fa fa-times"></i></a></td>
+                        <th>Order ID</th>
+                        <th>Customer Name</th>
+                        <th>Phone</th>
+                        <th>Order Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                     </tr>
-                <?php endforeach; ?>
+                </thead>
+                <tbody>
+                    <?php foreach ($ordersList as $order): ?>
+                        <tr>
+                            <td>
+                                <a href="/admin/order/view/<?php echo $order['id']; ?>">
+                                    #<?php echo htmlspecialchars($order['id']); ?>
+                                </a>
+                            </td>
+                            <td><?php echo htmlspecialchars($order['user_name']); ?></td>
+                            <td><?php echo htmlspecialchars($order['user_phone']); ?></td>
+                            <td><?php echo htmlspecialchars($order['date']); ?></td>
+                            <td>
+                                <span class="label label-<?php echo $order['status'] == 1 ? 'info' : ($order['status'] == 4 ? 'success' : 'warning'); ?>">
+                                    <?php echo \App\Core\Order::getStatusText($order['status']); ?>
+                                </span>
+                            </td>
+                            <td>
+                                <a href="/admin/order/view/<?php echo $order['id']; ?>" class="btn btn-sm btn-info" title="View">
+                                    <i class="fa fa-eye"></i> View
+                                </a>
+                                <a href="/admin/order/update/<?php echo $order['id']; ?>" class="btn btn-sm btn-warning" title="Edit">
+                                    <i class="fa fa-pencil"></i> Edit
+                                </a>
+                                <a href="/admin/order/delete/<?php echo $order['id']; ?>" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this order?')">
+                                    <i class="fa fa-trash"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
             </table>
-
         </div>
     </div>
 </section>

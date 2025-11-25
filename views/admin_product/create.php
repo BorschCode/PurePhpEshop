@@ -35,10 +35,13 @@
                         <input type="text" name="tittle" placeholder="" value="">
 
                         <p>Артикул</p>
-                        <input type="text" name="code" placeholder="" value="">
+                        <input type="number" name="code" placeholder="Product code (number)" value="" required>
 
                         <p>Стоимость, $</p>
-                        <input type="text" name="price" placeholder="" value="">
+                        <input type="number" step="0.01" name="price" placeholder="0.00" value="" required>
+
+                        <p>Акционная цена, $</p>
+                        <input type="number" step="0.01" name="price_new" placeholder="0.00" value="0">
 
                         <p>Категория</p>
                         <select name="category_id">

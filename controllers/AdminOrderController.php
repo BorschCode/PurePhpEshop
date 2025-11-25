@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Core\AdminBase;
-use App\Models\Order;
+use App\Core\Order;
 use App\Models\Product;
 
 /**
@@ -60,7 +60,7 @@ final class AdminOrderController extends AdminBase
             $userPhone = $_POST['userPhone'] ?? '';
             $userComment = $_POST['userComment'] ?? '';
             $date = $_POST['date'] ?? '';
-            $status = $_POST['status'] ?? 1;
+            $status = (int)($_POST['status'] ?? 1);
 
             // Save changes
             Order::updateOrderById($id, $userName, $userPhone, $userComment, $date, $status);

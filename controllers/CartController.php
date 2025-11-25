@@ -8,7 +8,7 @@ use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
-use App\Models\Order;
+use App\Core\Order;
 
 /**
  * Created by PhpStorm.

@@ -1,7 +1,18 @@
 FROM php:8.4-apache
 
-# Install required PHP extensions
-RUN docker-php-ext-install pdo pdo_mysql mysqli
+# Install system dependencies for GD extension
+RUN apt-get update && apt-get install -y \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev \
+    libwebp-dev \
+    libxpm-dev \
+    zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Configure and install GD extension
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp --with-xpm \
+    && docker-php-ext-install pdo pdo_mysql mysqli gd
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite

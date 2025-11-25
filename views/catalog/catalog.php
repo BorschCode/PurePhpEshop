@@ -1,4 +1,17 @@
-<?php include ROOT . '/views/layouts/header.php'; ?>
+<?php
+/**
+ * Catalog View Template
+ *
+ * Displays the product catalog page with category sidebar navigation and product grid.
+ * Shows all latest products with images, pricing, and add-to-cart functionality.
+ * Includes "New" badges for recently added products.
+ *
+ * @var array $categories List of product categories for sidebar navigation
+ * @var array $latestProducts Array of products to display in catalog
+ * @var string $pageTitle Page title for SEO
+ * @var string $pageDescription Page description for SEO
+ */
+include ROOT . '/views/layouts/header.php'; ?>
 
 <section>
     <div class="container">
@@ -32,13 +45,13 @@
                                 <div class="single-products">
                                     <div class="productinfo text-center">
                                         <div class="imageProduct">
-                                            <img src="<?php echo \App\Models\Product::getLowImage($product['id']); ?>" />
-                                            <img src="<?php echo \App\Models\Product::getMediumImage($product['id']); ?>"/>
+                                            <img src="<?php echo \App\Models\Product::getLowImage($product['id']); ?>" alt="<?php echo htmlspecialchars($product['tittle']); ?>" />
+                                            <img src="<?php echo \App\Models\Product::getMediumImage($product['id']); ?>" alt="<?php echo htmlspecialchars($product['tittle']); ?>"/>
                                         </div>
-                                        <h2><?php echo $product['price'];?>$</h2>
+                                        <h2>$<?php echo $product['price'];?></h2>
                                         <p>
                                             <a href="/alias/p<?php echo $product['id'];?>">
-                                                <?php echo $product['tittle'];?>
+                                                <?php echo htmlspecialchars($product['tittle']);?>
                                             </a>
                                         </p>
                                         <a href="/cart/add/<?php echo $product['id']; ?>" class="btn btn-default add-to-cart" data-id="<?php echo $product['id']; ?>"><i class="fa fa-shopping-cart"></i>Add to Cart</a>

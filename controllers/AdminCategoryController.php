@@ -51,19 +51,18 @@ final class AdminCategoryController extends AdminBase
             // If the form was submitted
             // Get data from the form
             $name = $_POST['name'] ?? '';
-            $sortOrder = $_POST['sort_order'] ?? 0;
-            $status = $_POST['status'] ?? 1;
+            $sortOrder = (int)($_POST['sort_order'] ?? 0);
+            $status = (int)($_POST['status'] ?? 1);
 
             // Flag for form errors
             $errors = false;
 
             // Basic validation: check if the name is set and not empty
-            if (!isset($name) || empty($name)) {
+            if (empty($name)) {
                 $errors[] = 'Fill in all required fields';
             }
 
-
-            if ($errors === false) {
+            if (!$errors) {
                 // If there are no errors, create the new category
                 Category::createCategory($name, $sortOrder, $status);
 
@@ -95,8 +94,8 @@ final class AdminCategoryController extends AdminBase
             // If the form was submitted
             // Get data from the form
             $name = $_POST['name'] ?? '';
-            $sortOrder = $_POST['sort_order'] ?? 0;
-            $status = $_POST['status'] ?? 1;
+            $sortOrder = (int)($_POST['sort_order'] ?? 0);
+            $status = (int)($_POST['status'] ?? 1);
 
             // Save the changes
             Category::updateCategoryById($id, $name, $sortOrder, $status);

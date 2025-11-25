@@ -26,7 +26,7 @@ final class Blog
 
             $sql = 'SELECT * FROM blog WHERE id = :id';
             $result = $db->prepare($sql);
-            $result->bindParam(':id', $id, PDO::PARAM_INT);
+            $result->bindValue(':id', $id, PDO::PARAM_INT);
             $result->setFetchMode(PDO::FETCH_ASSOC);
             $result->execute();
 

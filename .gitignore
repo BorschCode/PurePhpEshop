@@ -1,0 +1,33 @@
+# Composer
+/vendor/
+composer.lock
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Cache
+cache/
+tmp/
+
+# Upload directory (keep structure but ignore content)
+upload/images/products/*
+!upload/images/products/.gitkeep
+
+# Config files with sensitive data
+config/db_params.php
